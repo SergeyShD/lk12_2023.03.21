@@ -1,17 +1,69 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
     </head>
 
     <body>
-        <p>Console:</p>
+        <h1>Console:</h1>
+        <div class = "box"></div>
         <!-- <script src = "script.js"></script> -->
         <!-- <script src = "async.js"></script> -->
-
+        <style>
+            body{
+                margin:0;
+                min-height: 100vh;
+                display: grid;
+                grid-template-rows: auto 1fr;
+                gap: 30 px;
+                padding: 30px;
+                box-sizing: border-box;
+                font-family: sans-serif;
+            }
+            h1{
+                margin:0;
+                text-align:center;
+            }
+            .box{
+                display:grid;
+                grid-template-columns: repeat(3,auto);
+                gap: 20px;
+                align-content: center;
+            }
+            .card{
+                box-shadow:0 0 5px 0 #2228;
+                padding:20px;
+                border-radius: 4px;
+                text-align: center;
+            }
+            .male{
+                background-color: cornflowerblue;
+            }
+            .female{
+                background-color: pink;
+            }
+        </style>
 
         <script>
-            
+            const box = document.querySelector(".box")
+            const link = "https://fakerapi.it/api/v1/persons?_quantity=9"
+            const createCard = function(obj){
+                const card = document.createElement("div")
+                card.className = "card"
+                card.classList.add(obj.gender)
+                card.innerText = obj.firstname
+                box.append(card)
+            }
+            fetch(link)
+                .then(data => {
+                    return data.json()
+                    })
+                .then(data => {
+                    console.log(data)
+                    for (let user of data.data){
+                        createCard(user)
+                    }
+                })
         </script>
     </body>
 </html>
